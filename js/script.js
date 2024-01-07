@@ -24,7 +24,7 @@ const getRandomQuestion = () => {
 let guessesCounter = 0;
 let currentQuestion = getRandomQuestion();
 
-const getVirtualKeyKeyboard = () => {
+const renderVirtualKeyboard = () => {
   const alphabet = "abcdefghijklmnopqrstuvwxyz";
   const virtualKeyboard = document.createElement("div");
   virtualKeyboard.className = "virtual-keyboard";
