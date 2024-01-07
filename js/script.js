@@ -16,6 +16,13 @@ const questionsData = [
 ];
 const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
+let gallowsImg;
+let quizContainer;
+let answerContainer;
+let questionContainer;
+let guessCounterContainer;
+
+
 const getRandomQuestion = () => {
   const randomIndex = Math.floor(Math.random() * questionsData.length);
   return questionsData[randomIndex];
@@ -24,50 +31,72 @@ const getRandomQuestion = () => {
 let guessesCounter = 0;
 let currentQuestion;
 
+
 const renderVirtualKeyboard = () => {
-  const alphabet = "abcdefghijklmnopqrstuvwxyz";
-  const virtualKeyboard = document.createElement("div");
-  virtualKeyboard.className = "virtual-keyboard";
+  const virtualKeyboard = renderElement("div", "virtual-keyboard", null);
   for (let letter of alphabet) {
-    const button = document.createElement("button");
-    button.className = "key-btn";
-    button.innerHTML = letter.toUpperCase();
+    const button = renderElement("button", "key-btn", virtualKeyboard, {innerHTML: letter.toUpperCase()})
     button.addEventListener("click", () => handleKeyPress(letter));
-    virtualKeyboard.appendChild(button);
   }
   return virtualKeyboard;
 };
+
+
+const renderElement = (child, className, parent, attr) => {
+  const element = document.createElement(child);
+  className && (element.className = className);
+  parent && (parent.append(element));
+  if(attr) {
+    for (let key in attr){
+    element[key] = attr[key];
+    }
+  }
+  return element;
+}
 
 const initialRender = () => {
   document.body.innerHTML = "";
   const virtualKeyboard = renderVirtualKeyboard();
   const question = currentQuestion = getRandomQuestion();
   const answerLength = question.answer.length;
-  document.body.innerHTML = `<div class="main-container">
-    <header>
-      <h1 class="heading">Hangman Game</h1>
-    </header>
-      <div class="game-container">
-        <div class="gallows-container">
-          <img src="./assets/0.png" alt="" />
-        </div>
-        <div class="quiz">
-          <p class="answer"></p>
-          <p class="question"></p>
-          <p class="guesses">
-          Incorrect guesses:
-          <span class="guessess-counter" id="guessess-counter"></span>/6
-          </p>
-        </div>
-      </div>
-    </div>`;
-    const qizElement = document.querySelector('.quiz');
-    console.log(qizElement);
-    qizElement.append(virtualKeyboard);
-    answerPlaceholderRender(answerLength);
-    questionRender(question.question);
-    guessesRender(0);
-    gallowsRender(0);
+  const mainContainer = renderElement("div", "main-container", document.body);
+  const mainHeader = renderElement("header", null, mainContainer);
+  const mainHeading = renderElement("h1", "heading", mainHeader, {innerText: "Hangman Game"});
+  const gameContainer = renderElement("div", "game-container", mainContainer);
+  const gallowsContainer = renderElement("div", "gallows-container", gameContainer);
+  gallowsImg = renderElement("img", null, gallowsContainer, {src: "./assets/0.png", alt: "Gallows"});
+  quizContainer = renderElement("div", "quiz", gameContainer);
+  answerContainer = renderElement("p", "answer", quizContainer);
+  questionContainer = renderElement("p", "question", quizContainer);
+  const guessesContainer = renderElement("p", "guesses", quizContainer, {innerText: "Incorrect guesses: "});
+  guessCounterContainer = renderElement("span", "guesses-counter", guessesContainer);
+  guessesContainer.append("/6");
+
+  quizContainer.append(virtualKeyboard);
+
+  answerPlaceholderRender(answerLength);
+  questionRender(question.question);
+  guessesRender(0);
+  gallowsRender(0);
+  // document.body.innerHTML = `<div class="main-container">
+  //   <header>
+  //     <h1 class="heading">Hangman Game</h1>
+  //   </header>
+  //   <div class="game-container">
+  //       <div class="gallows-container">
+  //         <img src="./assets/0.png" alt="" />
+  //       </div>
+  //       <div class="quiz">
+  //         <p class="answer"></p>
+  //         <p class="question"></p>
+  //         <p class="guesses">
+  //         Incorrect guesses:
+  //         <span class="guesses-counter"></span>/6
+  //         </p>
+  //       </div>
+  //     </div>
+  //   </div>`;
+
 };
 
 const answerPlaceholderRender = (answerLength) => {
@@ -78,21 +107,18 @@ const answerPlaceholderRender = (answerLength) => {
     placeholder += '_';
     answerLength--;
   }
-  answerElement.innerHTML = placeholder;
+  answerContainer.innerHTML = placeholder;
 }
 
 const questionRender = (question) => {
-  const questionElement = document.querySelector('.question');
-  questionElement.innerHTML = question;
+  questionContainer.innerHTML = question;
 }
 
 const guessesRender = (guessesCounter) => {
-  const questionElement = document.querySelector('.guessess-counter');
-  questionElement.innerHTML = `${guessesCounter}`;
+  guessCounterContainer.innerHTML = `${guessesCounter}`;
 }
 
 const gallowsRender = (guessesCounter) => {
-  const gallowsImg = document.querySelector('.gallows-container img');
   gallowsImg.src = `./assets/${guessesCounter}.png`;
 }
 
