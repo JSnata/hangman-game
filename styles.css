@@ -108,7 +108,7 @@ img {
   margin-bottom:7px;
   border: 0;
   border-bottom:solid #e95105 3px; 
-  transition: all 0.3s ease-in;
+  transition: all 0.1s ease-in;
 }
 
 .key-btn:hover,
@@ -177,5 +177,5 @@ img {
   background-color: #E48483;
   cursor: pointer;
   box-shadow: none;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
