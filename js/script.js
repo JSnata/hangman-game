@@ -22,6 +22,7 @@ let answerContainer;
 let questionContainer;
 let guessCounterContainer;
 let mainContainer;
+let virtualKeyboard;
 
 const getRandomQuestion = () => {
   const randomIndex = Math.floor(Math.random() * questionsData.length);
@@ -57,7 +58,7 @@ const renderElement = (child, className, parent, attr) => {
 
 const initialRender = () => {
   document.body.innerHTML = "";
-  const virtualKeyboard = renderVirtualKeyboard();
+  virtualKeyboard = renderVirtualKeyboard();
   const question = (currentQuestion = getRandomQuestion());
   mainContainer = renderElement("div", "main-container", document.body);
   const mainHeader = renderElement("header", null, mainContainer);
@@ -170,3 +171,10 @@ const handleStartButton = () => {
   currentAnswerPlaceholder = "";
   initialRender();
 }
+
+window.addEventListener('keydown', (event) => {
+  let key = event.code;
+  if(key.includes("Key")){
+    handleKeyPress(event.code[event.code.length - 1].toLowerCase());
+  }
+})
