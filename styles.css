@@ -121,6 +121,11 @@ img {
   filter: brightness(1.2);
 }
 
+.key-btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .modal {
   position: fixed;
   align-items: center;

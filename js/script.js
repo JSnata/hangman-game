@@ -32,6 +32,7 @@ const getRandomQuestion = () => {
 let guessesCounter = 0;
 let currentQuestion = "";
 let currentAnswerPlaceholder = "";
+let disabledKeys = [];
 
 const renderVirtualKeyboard = () => {
   const virtualKeyboard = renderElement("div", "virtual-keyboard", null);
@@ -149,6 +150,7 @@ const gallowsRender = (guessesCounter) => {
 initialRender();
 
 const handleKeyPress = (letter) => {
+  disableKey(letter);
   if (currentQuestion.answer.toLowerCase().includes(letter)) {
     answerPlaceholderRender(currentQuestion.answer, letter);
   } else {
@@ -169,12 +171,23 @@ const handleStartButton = () => {
   guessesCounter = 0;
   currentQuestion = "";
   currentAnswerPlaceholder = "";
+  disabledKeys = [];
   initialRender();
 }
 
 window.addEventListener('keydown', (event) => {
   let key = event.code;
-  if(key.includes("Key")){
+  if(key.includes("Key") && !disabledKeys.includes(event.code[event.code.length - 1].toLowerCase())){
     handleKeyPress(event.code[event.code.length - 1].toLowerCase());
   }
-})
+});
+
+const disableKey = (letter) => {
+  disabledKeys.push(letter.toLowerCase());
+  for (let i = 0; i < virtualKeyboard.children.length; i++) {
+    const childElement = virtualKeyboard.children[i];
+    if(childElement.innerText.toLowerCase() === letter.toLowerCase()){
+      childElement.disabled = true;
+    }
+  }
+}
