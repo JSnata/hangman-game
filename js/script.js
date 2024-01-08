@@ -21,6 +21,7 @@ let quizContainer;
 let answerContainer;
 let questionContainer;
 let guessCounterContainer;
+let mainContainer;
 
 const getRandomQuestion = () => {
   const randomIndex = Math.floor(Math.random() * questionsData.length);
@@ -28,7 +29,7 @@ const getRandomQuestion = () => {
 };
 
 let guessesCounter = 0;
-let currentQuestion;
+let currentQuestion = "";
 let currentAnswerPlaceholder = "";
 
 const renderVirtualKeyboard = () => {
@@ -58,7 +59,7 @@ const initialRender = () => {
   document.body.innerHTML = "";
   const virtualKeyboard = renderVirtualKeyboard();
   const question = (currentQuestion = getRandomQuestion());
-  const mainContainer = renderElement("div", "main-container", document.body);
+  mainContainer = renderElement("div", "main-container", document.body);
   const mainHeader = renderElement("header", null, mainContainer);
   const mainHeading = renderElement("h1", "heading", mainHeader, {
     innerText: "Hangman Game",
@@ -92,25 +93,18 @@ const initialRender = () => {
   questionRender(question.question);
   guessesRender(0);
   gallowsRender(0);
-  // document.body.innerHTML = `<div class="main-container">
-  //   <header>
-  //     <h1 class="heading">Hangman Game</h1>
-  //   </header>
-  //   <div class="game-container">
-  //       <div class="gallows-container">
-  //         <img src="./assets/0.png" alt="" />
-  //       </div>
-  //       <div class="quiz">
-  //         <p class="answer"></p>
-  //         <p class="question"></p>
-  //         <p class="guesses">
-  //         Incorrect guesses:
-  //         <span class="guesses-counter"></span>/6
-  //         </p>
-  //       </div>
-  //     </div>
-  //   </div>`;
 };
+
+const renderModal = (result, answer) => {
+  const modal = renderElement("div", "modal", mainContainer);
+  const modalContent = renderElement("div", "modal-content", modal);
+  const resultMessage = renderElement("h2", "result-message", modalContent, {innerText: result});
+  const secretWordContainer = renderElement("p", "secret-word", modalContent, {innerText: "The secret word was: "});
+  const secretWord = renderElement("span", null, secretWordContainer, {innerText: answer});
+  const startButton = renderElement("button", "modal-button", modalContent, {innerText: "Play Again"});
+  startButton.addEventListener("click", () => handleStartButton());
+  modal.style.display = "flex";
+}
 
 const answerPlaceholderRender = (answer, userAnswer) => {
   let preparedAnswer = answer.toLowerCase();
@@ -125,6 +119,9 @@ const answerPlaceholderRender = (answer, userAnswer) => {
           currentAnswerPlaceholder.substring(0, i) +
           preparedUserAnswer +
           currentAnswerPlaceholder.substring(i + 1);
+          if(!currentAnswerPlaceholder.includes('_')){
+            renderModal("Congratulations! You won!", answer);
+          }
       }
     }
   } else {
@@ -162,6 +159,14 @@ const handleKeyPress = (letter) => {
     if(guessesCounter === 6) {
       gallowsRender(guessesCounter);
       guessesRender(guessesCounter);
+      renderModal("Wasted :( ", currentQuestion.answer.toLowerCase());
     }
   }
 };
+
+const handleStartButton = () => {
+  guessesCounter = 0;
+  currentQuestion = "";
+  currentAnswerPlaceholder = "";
+  initialRender();
+}
