@@ -35,13 +35,18 @@ img {
   color: #832c01;
 }
 
+@media screen and (max-width: 767px) {
+  .heading {
+    font-size: 24px;
+  }
+}
+
 .main-container {
   box-sizing: border-box;
   background-color: var(--color-bg-body);
   padding: 0 40px;
   max-width: 1440px;
   margin: 0 auto;
-  margin-top: 100px;
 }
 
 .game-container {
@@ -50,11 +55,32 @@ img {
   gap: 100px;
   padding: 100px;
   width: 100%;
-  border: 2px solid #E48483;;
+  border: 2px solid #e48483;
+}
+
+@media screen and (max-width: 1235px) {
+  .main-container {
+    padding: 0 10px;
+    margin-top: 10px;
+  }
+
+  .game-container {
+    gap: 20px;
+    padding: 10px;
+    flex-wrap: nowrap;
+  }
+
+  .gallows-container {
+    max-width: 300px;
+  }
+
+  .quiz {
+    flex-grow: 0;
+  }
 }
 
 .gallows-container {
-  width: 300px;
+  max-width: 300px;
 }
 
 .quiz {
@@ -87,6 +113,35 @@ img {
   color: #ff0000;
 }
 
+@media screen and (max-width: 697px) {
+  img {
+    height: 200px;
+  }
+
+  .game-container {
+    gap: 10px;
+    padding: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .answer {
+    font-size: 24px;
+    margin: 5px;
+    margin-bottom: 10px;
+  }
+
+  .question {
+    font-size: 20px;
+    margin: 5px;
+  }
+
+  .guesses {
+    font-size: 20px;
+  }
+}
+
 .virtual-keyboard {
   display: flex;
   justify-content: center;
@@ -95,20 +150,53 @@ img {
 }
 
 .key-btn {
-  background:#E48483;;
-  color:#fff;
-  width:50px;
-  height:50px;
-  line-height:50px;
-  font-size:16px;
-  border-radius:5px;
-  text-align:center;
-  float:left;
-  margin-right:7px;
-  margin-bottom:7px;
+  background: #e48483;
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 16px;
+  border-radius: 5px;
+  text-align: center;
+  float: left;
+  margin-right: 7px;
+  margin-bottom: 7px;
   border: 0;
-  border-bottom:solid #e95105 3px; 
+  border-bottom: solid #e95105 3px;
   transition: all 0.1s ease-in;
+}
+
+@media screen and (max-width: 697px) {
+  .key-btn {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .key-btn {
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    font-size: 16px;
+  }
+
+  .answer {
+    font-size: 24px;
+    margin: 5px;
+    margin: 5px;
+  }
+
+  .question {
+    font-size: 18px;
+    margin: 5px;
+  }
+
+  .guesses {
+    font-size: 18px;
+    margin: 10px;
+  }
 }
 
 .key-btn:hover,
@@ -178,7 +266,7 @@ img {
   border: none;
   border-radius: 50px;
   text-decoration: none;
-  background-color: #E48483;
+  background-color: #e48483;
   cursor: pointer;
   box-shadow: none;
   transition: all 0.1s ease-in-out;
