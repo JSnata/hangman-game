@@ -13,6 +13,18 @@ const questionsData = [
   { question: "What do you wear on your feet?", answer: "Shoes" },
   { question: 'What is the opposite of "up"?', answer: "Down" },
   { question: "What day comes after Sunday?", answer: "Monday" },
+  { question: "Which fruit is yellow and curved?", answer: "Banana" },
+  { question: "Which animal is known for its long neck?", answer: "Giraffe" },
+  { question: "Which bird is associated with wisdom?", answer: "Owl" },
+  { question: "What do you use to eat soup?", answer: "Spoon" },
+  { question: "Which animal swings from trees and eats bananas?", answer: "Monkey" },
+  { question: "What do you wear to keep your feet warm?", answer: "Socks" },
+  { question: "Which bird can't fly but can swim?", answer: "Penguin" },
+  { question: "What insect can sting and produces honey?", answer: "Bee" },
+  { question: "What do you use to travel on water?", answer: "Boat" },
+  { question: "What do you use to listen to music?", answer: "Headphones" },
+  { question: "Which big cat has a roar and is known as the 'king of the jungle'?", answer: "Lion" },
+  { question: "What do you use to protect your head?", answer: "Helmet" }
 ];
 const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
