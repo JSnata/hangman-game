@@ -27,7 +27,7 @@ const questionsData = [
   { question: "What do you use to protect your head?", answer: "Helmet" }
 ];
 const alphabet = "abcdefghijklmnopqrstuvwxyz";
-
+let oldQuestionIndex;
 let gallowsImg;
 let quizContainer;
 let answerContainer;
@@ -38,7 +38,12 @@ let virtualKeyboard;
 
 const getRandomQuestion = () => {
   const randomIndex = Math.floor(Math.random() * questionsData.length);
-  return questionsData[randomIndex];
+  if(randomIndex === oldQuestionIndex) {
+    return getRandomQuestion();
+  } else {
+    oldQuestionIndex = randomIndex;
+    return questionsData[randomIndex];
+  }
 };
 
 let guessesCounter = 0;
